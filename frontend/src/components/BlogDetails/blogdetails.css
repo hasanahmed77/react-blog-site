@@ -1,0 +1,10 @@
+.blog-title {
+    display: inline;
+    margin-right: 0.5rem;
+}
+
+.blog-details {
+    max-width: 50%;
+    word-spacing: 0.4rem;
+    font-size: larger;
+}
