@@ -1,0 +1,30 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.3px solid grey;
+    margin-bottom: 2rem;
+}
+
+.logo{
+    margin-left: 2rem;
+}
+
+.btn-navbar {
+    text-decoration: none;
+    color: inherit;
+    margin-right: 2rem;
+}
+
+.list-btn-navbar {
+    margin-top: 1.3rem;
+    list-style-type: none;
+    display: flex;
+}
+
+.btn-new-blog {
+    background-color: black;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 10%;
+}
+
