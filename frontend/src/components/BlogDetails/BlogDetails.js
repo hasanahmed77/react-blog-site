@@ -14,6 +14,7 @@ const BlogDetails = ({ blogs }) => {
       <div className="blog-body">
         <p>{currentBlog.body}</p>
       </div>
+      <button className='btn-delete-blog'>delete blog</button>
     </div>
   )
 }

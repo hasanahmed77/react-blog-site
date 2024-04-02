@@ -1,0 +1,28 @@
+.new-blog {
+    max-width: 20%;
+    margin-left: 6rem;
+}
+
+.new-blog-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.labels {
+    margin-bottom: 0.5rem;
+}
+
+.inputs {
+    margin-bottom: 1rem;
+}
+
+.btn-add-blog {
+    color: white;
+    width: 30%;
+    align-self: center;
+    padding: 0.5rem;
+    border: none;
+    background-color: black;
+    border-radius: 10%;
+    cursor: pointer;
+}

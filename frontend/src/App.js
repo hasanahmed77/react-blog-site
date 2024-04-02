@@ -4,6 +4,7 @@ import Home from './components/Home/Home'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import BlogDetails from './components/BlogDetails/BlogDetails';
 import { useState } from 'react';
+import NewBlog from './NewBlog/NewBlog';
 
 function App() {
   const [blogs, setBlogs] = useState([
@@ -17,13 +18,13 @@ function App() {
       <div className="App">
         <Navbar />
         <Route exact path="/" >
-          <Home blogs={blogs}/>
+          <Home blogs={ blogs }/>
         </Route>
         <Route exact path="/create" >
-          <div>Create</div>
+          <NewBlog blogs={blogs} setBlogs={setBlogs} />
         </Route>
         <Route exact path="/blogs/:id" >
-          <BlogDetails blogs={blogs}/>
+          <BlogDetails blogs={ blogs }/>
         </Route>
       </div>
     </Router>
