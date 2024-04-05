@@ -3,29 +3,28 @@ import Navbar from './components/Navbar/Navbar'
 import Home from './components/Home/Home'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import BlogDetails from './components/BlogDetails/BlogDetails';
-import { useState } from 'react';
-import NewBlog from './NewBlog/NewBlog';
+import { useEffect, useState } from 'react';
+import NewBlog from './components/NewBlog/NewBlog';
+import useFetch from './hooks/useFetch';
 
 function App() {
-  const [blogs, setBlogs] = useState([
-    {'title': 'One Piece', 'author': 'Oda', 'body': 'lorem impsum....', 'id': 1},
-    {'title': 'Naruto', 'author': 'Kishimoto', 'body': 'lorem ipsum......', 'id': 2},
-    {'title': 'Dragon Ball Z', 'author': 'Toriyama', 'body': 'lorem ipsum......', 'id': 3},
-])
+  const { data: blogs, isPending } = useFetch("http://localhost:3001/api/blogs")
 
   return (
     <Router>
       <div className="App">
         <Navbar />
-        <Route exact path="/" >
-          <Home blogs={ blogs }/>
-        </Route>
-        <Route exact path="/create" >
-          <NewBlog blogs={blogs} setBlogs={setBlogs} />
-        </Route>
-        <Route exact path="/blogs/:id" >
-          <BlogDetails blogs={ blogs }/>
-        </Route>
+          <Switch>
+            <Route exact path="/" >
+              <Home blogs/>
+          </Route>
+          <Route exact path="/create" >
+            <NewBlog/>
+          </Route>
+          <Route exact path="/blogs/:id" >
+            { blogs && <BlogDetails /> }
+          </Route>
+          </Switch>
       </div>
     </Router>
   );

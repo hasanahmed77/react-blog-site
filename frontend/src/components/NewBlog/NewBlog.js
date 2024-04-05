@@ -1,20 +1,30 @@
 import React, { useState } from 'react'
 import './newblog.css'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import useFetch from '../../hooks/useFetch'
 
-const NewBlog = ({ blogs, setBlogs }) => {
+const NewBlog = () => {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const [author, setAuthor] = useState('')
+    const [isPending, setIsPending] = useState(false)
     const history = useHistory()
 
     const handleSubmit = e => {
         e.preventDefault()
-        const blog = { title, body, author, id:4 }
-        setBlogs(blogs => [...blogs, blog])
+        setIsPending(true)
+        const blog = { title, body, author}
+
+        fetch("http://localhost:3001/api/blogs", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(blog)
+        }).then(() => {
+            console.log('NEW BLOG ADDED!')
+            setIsPending(false)
+        })
         history.push('/')
     }
-    console.log(blogs)
     return (
     <div className='new-blog'>
         <h1 className='new-blog-header'>add new blog</h1>
@@ -42,7 +52,8 @@ const NewBlog = ({ blogs, setBlogs }) => {
                 required
                 onChange={e => setAuthor(e.target.value)}
             />
-            <button className='btn-add-blog' onClick={handleSubmit}>add blog</button>
+            { !isPending && <button className='btn-add-blog' onClick={handleSubmit}>add blog</button> }
+            { isPending && <button  disabled className='btn-add-blog' onClick={handleSubmit}>adding blog</button> }
         </form>
     </div>
     )

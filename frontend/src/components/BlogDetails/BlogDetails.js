@@ -1,20 +1,36 @@
 import React from 'react'
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min'
 import './blogdetails.css'
+import useFetch from '../../hooks/useFetch'
 
-const BlogDetails = ({ blogs }) => {
+const BlogDetails = () => {
+  const history = useHistory()
   const { id } = useParams()
-  const currentBlog = blogs.filter(blog => blog.id == id)[0]
+
+  const { data: blogs, isPending } = useFetch(`http://localhost:3001/api/blogs/${id}`)
+
+  const handleDelete = () => {
+    fetch(`http://localhost:3001/api/blogs/${id}`, {
+      method: 'DELETE',
+    }).then(() => {
+      history.push('/')
+    
+    })
+  }
 
   return (
-    <div className='blog-details'>
-      <div className="blog-about">
-        <p><h1 className='blog-title'>{currentBlog.title}</h1> by {currentBlog.author}</p>
-      </div>
-      <div className="blog-body">
-        <p>{currentBlog.body}</p>
-      </div>
-      <button className='btn-delete-blog'>delete blog</button>
+    <div>
+      { blogs && 
+          <div className='blog-details'>
+          <div className="blog-about">
+            <p><h1 className='blog-title'>{blogs.title}</h1> by {blogs.author}</p>
+          </div>
+          <div className="blog-body">
+            <p>{blogs.body}</p>
+          </div>
+          <button className='btn-delete-blog' onClick={handleDelete}>delete blog</button>
+        </div>
+        }
     </div>
   )
 }
