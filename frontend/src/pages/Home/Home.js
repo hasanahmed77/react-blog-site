@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import BlogList from '../BlogList/BlogList'
 import useFetch from '../../hooks/useFetch'
+import BlogList from '../../components/BlogList/BlogList'
+
 
 const Home = () => {
     const { data: blogs, isPending } = useFetch("http://localhost:3001/api/blogs")

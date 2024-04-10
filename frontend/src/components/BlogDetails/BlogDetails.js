@@ -2,10 +2,12 @@ import React from 'react'
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min'
 import './blogdetails.css'
 import useFetch from '../../hooks/useFetch'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 const BlogDetails = () => {
   const history = useHistory()
   const { id } = useParams()
+  const {user} = useAuthContext()
 
   const { data: blogs, isPending } = useFetch(`http://localhost:3001/api/blogs/${id}`)
 
