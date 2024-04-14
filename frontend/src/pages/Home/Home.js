@@ -7,7 +7,7 @@ const Home = () => {
     const { data: blogs, isPending } = useFetch("http://localhost:3001/api/blogs")
     return (
         <div>
-            { isPending ? <h2>Loading...</h2> : <BlogList blogs={blogs} />} 
+            { isPending ? <h2>Loading...</h2> : <BlogList blogs={blogs} homeOrMyBlogs={'home'} />} 
         </div>
     )
     }

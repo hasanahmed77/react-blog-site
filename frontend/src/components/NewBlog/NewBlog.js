@@ -1,23 +1,34 @@
 import React, { useState } from 'react'
 import './newblog.css'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import useFetch from '../../hooks/useFetch'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 const NewBlog = () => {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const [author, setAuthor] = useState('')
+    const [error, setError] = useState(null)
     const [isPending, setIsPending] = useState(false)
     const history = useHistory()
+    const { user } = useAuthContext()
 
     const handleSubmit = e => {
         e.preventDefault()
         setIsPending(true)
+
+        if (!user){
+            setError('You must be logged in')
+            return
+        }
+
         const blog = { title, body, author}
 
         fetch("http://localhost:3001/api/blogs", {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            },
             body: JSON.stringify(blog)
         }).then(() => {
             console.log('NEW BLOG ADDED!')
@@ -54,6 +65,7 @@ const NewBlog = () => {
             />
             { !isPending && <button className='btn-add-blog' onClick={handleSubmit}>add blog</button> }
             { isPending && <button  disabled className='btn-add-blog' onClick={handleSubmit}>adding blog</button> }
+            { error && <div className='error-message'>{ error }</div>}
         </form>
     </div>
     )
